@@ -1,0 +1,73 @@
+html, body, .container {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.header_nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.price {
+    font-size: 1.5rem;
+}
+
+header {
+    background-color: #e90c0c;
+}
+
+.nav-link, .navbar-brand {
+    color: white;
+}
+
+.main-color-section {
+    padding: 5px;
+    margin: 25px 0;
+}
+
+/* courier order */
+
+.poster {
+    position: relative;
+}
+
+.descr {
+    display: none;
+    margin-left: 30px;
+    margin-top: 17px;
+    /*background:#000000;*/
+    /*-moz-box-shadow:0 5px 5px #f3f3f3;*/
+    /*-webkit-box-shadow:0 5px 5px #f3f3f3;*/
+    /*box-shadow:0 5px 5px #f3f3f3;*/
+}
+
+.poster:hover .descr {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+}
+
+/*manager order*/
+.order-form-scroll {
+    overflow: auto;
+    max-height: 100px;
+    margin: 10px 0;
+}
