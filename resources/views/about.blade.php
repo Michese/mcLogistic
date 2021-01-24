@@ -1,95 +1,101 @@
-<!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/app.css">
-    <script src="js/app.js" defer></script>
-    <title>О компании</title>
-</head>
-<body>
-<div class="container">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html">Главная</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">О компании</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./contacts.html">Контакты</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./calculationСost.html">Расчет стоимости</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./partners.html">Партнерам</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./order.html">Оформить заказ</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <h1>О компании</h1>
+@extends('main.wrapper')
 
-        <p>Компания <a href="./index.html">MS-logistics</a> прочно закрепила свое лидерство на рынке логистических услуг. Много лет клиенты
-            доверяют нам перевозку грузов по Москве и Московской области.</p>
+@section('title')
+    О компании
+@endsection
 
-        <p>Удобный <a href="./calculationСost.html">Расчет стоимости</a> заказа и онлайн <a href="./order.html">Оформление заказа</a> позволяет нашим
-            клиентам быстро, удобно и безопасно пользоваться услугами компании <a href="./index.html">MS-logistics</a>.</p>
+@section('content')
+<h1>О компании</h1>
 
-        <section>
-            <h2 class="text-xl-center">Безопасность перевозок обеспечивается:</h2>
-            <ul>
-                <li>Современным оборудованием (специализированные автомобили с крепежным оборудованием и системой
-                    бережной перевозки);
-                </li>
-                <li>Профессиональными сотрудниками (опытные водители, специалисты по погрузочно-разгрузочным работам,
-                    мастера по установке бытовой техники и окон);
-                </li>
-                <li>Передовые технологии (современные ударопрочные материалы для упаковки грузов).</li>
-            </ul>
-        </section>
+<p>Компания
+    @if(Route::has('home'))
+        <a href="{{ route('home') }}">MS-logistics</a>
+    @else
+        MS-logistics
+    @endif
+    прочно закрепила свое лидерство на рынке логистических услуг. Много
+    лет клиенты
+    доверяют нам перевозку грузов по Москве и Московской области.</p>
 
-        <p>Доставка грузов осуществляется по нескольким категориям. Подробнее ознакомиться с перечнем оказываемых услуг
-            можно в разделе <a href="#">Услуги</a>.</p>
+<p>Удобный
+    @if(Route::has('calculationСost'))
+        <a href="{{ route('calculationСost') }}">Расчет стоимости</a>
+    @else
+        Расчет стоимости
+    @endif
 
-        <p>Сотрудничество с крупными магазинами позволяет оперативно и качественно доставлять различные грузы.</p>
-        <section>
-            <h2 class="text-xl-center">Наши партнеры:</h2>
-            <!--            // взять лого с сайта-->
-        </section>
+    заказа и онлайн
 
-        <p>Если Вы хотите стать партнером нашей компании, перейдите в раздел <a href="./partners.html">Партнерам</a>.</p>
-        <p>Здесь находится вся информация об условиях сотрудничества.</p>
-        <section>
-            <p>
-                Специальные предложения и акции позволяют нашим клиентам экономить на доставке без потери качества и
-                скорости перевозок.
-            </p>
-            <p>
-                Если у Вас возникли какие-то вопросы, перейдите в раздел <a href="./contacts.html">Контакты</a> и свяжитесь с нами
-                любым удобным способом.
-            </p>
-        </section>
+    @if(Route::has('order'))
+        <a href="{{ route('order') }}">Оформление заказа</a>
+    @else
+        Оформление заказа
+    @endif
 
-    </main>
-    <footer>
-        <p class="text-xl-center">2021</p>
-    </footer>
-</div>
-</body>
-</html>
+    позволяет нашим
+    клиентам быстро, удобно и безопасно пользоваться услугами компании
+    @if(Route::has('home'))
+    <a href="{{ route('home') }}">MS-logistics</a>
+    @else
+        MS-logistics
+    @endif
+
+    .</p>
+
+<section>
+    <h2 class="text-xl-center">Безопасность перевозок обеспечивается:</h2>
+    <ul>
+        <li>Современным оборудованием (специализированные автомобили с крепежным оборудованием и системой
+            бережной перевозки);
+        </li>
+        <li>Профессиональными сотрудниками (опытные водители, специалисты по погрузочно-разгрузочным работам,
+            мастера по установке бытовой техники и окон);
+        </li>
+        <li>Передовые технологии (современные ударопрочные материалы для упаковки грузов).</li>
+    </ul>
+</section>
+{{-- TODO --}}
+<p>Доставка грузов осуществляется по нескольким категориям. Подробнее ознакомиться с перечнем оказываемых услуг
+    можно в разделе
+
+    @if(Route::has('calculation.cost'))
+        <a href="{{ route('calculation.cost') }}">Расчет стоимости</a>
+    @else
+        Расчет стоимости
+    @endif
+    .</p>
+
+<p>Сотрудничество с крупными магазинами позволяет оперативно и качественно доставлять различные грузы.</p>
+<section>
+    <h2 class="text-xl-center">Наши партнеры:</h2>
+    <!--            // взять лого с сайта-->
+</section>
+
+<p>Если Вы хотите стать партнером нашей компании, перейдите в раздел
+
+    @if(Route::has('partners'))
+        <a href="{{ route('partners') }}">Партнерам</a>
+    @else
+        Партнерам
+    @endif
+    .</p>
+<p>Здесь находится вся информация об условиях сотрудничества.</p>
+<section>
+    <p>
+        Специальные предложения и акции позволяют нашим клиентам экономить на доставке без потери качества и
+        скорости перевозок.
+    </p>
+    <p>
+        Если у Вас возникли какие-то вопросы, перейдите в раздел
+
+        @if(Route::has('contacts'))
+            <a href="{{ route('contacts') }}">Контакты</a>
+        @else
+            Контакты
+        @endif
+
+        и свяжитесь с
+        нами любым удобным способом.
+    </p>
+</section>
+@endsection

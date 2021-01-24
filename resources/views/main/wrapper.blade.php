@@ -6,16 +6,16 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-{{--    @yield('head')--}}
+    @yield('head')
 
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/all.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    <script src="js/all.js"></script>
-    <script src="js/app.js" defer></script>
+    <script src="{{ asset('js/all.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <title>Главная</title>
+    <title>@yield('title')</title>
 </head>
 <body>
 <div class="container">
@@ -23,11 +23,11 @@
         @include('main.layouts.header')
     </header>
 
-    <main class="content">
+    <main class="content margin-top-30">
         @yield('content')
     </main>
 
-    <footer class="row bg-dark text-light justify-content-center">
+    <footer class="row bg-dark text-light justify-content-center margin-top-30">
         @include('main.layouts.footer')
     </footer>
 
