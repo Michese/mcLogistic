@@ -18,10 +18,32 @@
         <div class="d-flex justify-content-sm-between form-group w-100 row row-cols-6">
             <article class="border border-primary col-5 rounded">
                 <h2>Доставка</h2>
+
+                <div class="form-group">
+                    <label for="appt-date">Дата отправки:</label>
+                    <input id="appt-date" type="date" class="form-control" name="date">
+                </div>
+
+                <div class="form-group">
+                    <label for="appt-time">Время отправки: </label>
+                    <input id="appt-time" type="time" class="form-control" name="time">
+                </div>
+
                 <div class="form-group">
                     <label for="address1">Адрес отправки</label>
                     <input type="text" class="form-control" id="address1">
                 </div>
+
+                <div class="form-group">
+                    <label for="appt-date">Дата доставки:</label>
+                    <input id="appt-date" type="date" class="form-control" name="date">
+                </div>
+
+                <div class="form-group">
+                    <label for="appt-time">Время доставки: </label>
+                    <input id="appt-time" type="time" class="form-control" name="time">
+                </div>
+
                 <div class="form-group">
                     <label for="address2">Адрес получения</label>
                     <input type="text" class="form-control" id="address2">
@@ -44,17 +66,6 @@
                         <option value="2">Наличные</option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label for="appt-date">Дата доставки:</label>
-                    <input id="appt-date" type="date" class="form-control" name="date">
-                </div>
-
-                <div class="form-group">
-                    <label for="appt-time">Время доставки: </label>
-                    <input id="appt-time" type="time" class="form-control" name="time">
-                </div>
-
             </article>
             <article class="border border-primary col-5 rounded">
                 <h2>Характеристики груза</h2>
