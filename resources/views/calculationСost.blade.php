@@ -15,9 +15,9 @@
                 <div class="form-group">
                     <select class="custom-select custom-select-sm">
                         <option selected>Тип</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        @foreach($typeCargos as $typeCargo)
+                            <option value="{{ $typeCargo->type_cargo_id }}">{{ $typeCargo->title }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -86,7 +86,14 @@
                 <p class="text-success price">Сумма: <span id="total">0</span></p>
             </div>
 
-            <button type="submit" class="btn btn-primary align-self-center">Подтвердить</button>
+            <div class="btn-group align-self-center d-flex justify-content-around w-100">
+                <button type="submit" class="btn btn-primary col-3">Расчитать</button>
+                @if(Route::has('order'))
+                    <a class="btn btn-primary col-3" href="{{ route('order') }}">Сделать заказ</a>
+                @endif
+
+            </div>
+
         </article>
     </form>
 @endsection

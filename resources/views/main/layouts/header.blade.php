@@ -98,12 +98,36 @@
 
 
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <div class="dropdown dropleft">
+            @guest
+                @if(Route::has('auth.login'))
+                    @if(Route::is('auth.login'))
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Войти</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('auth.login') }}">Войти</a>
+                        </li>
+                    @endif
+                @endif
+
+                @if(Route::has('auth.register'))
+                    @if(Route::is('auth.register'))
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Регистрация</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('auth.register') }}">Регистрация</a>
+                        </li>
+                    @endif
+                @endif
+            @else
+                <li class="dropdown dropleft">
                     <a class="btn btn-primary btn-sm dropdown-toggle" href="#" role="button"
                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Олег
-                        <span class="text-light bg-dark rounded-circle p-1">2</span>
+                        {{ Auth::user()->name }}
+                        <span class="badge badge-light">2</span>
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -123,44 +147,29 @@
                             <a class="dropdown-item" href="{{ route('profile.manager.monitoring') }}">Заказы</a>
                         @endif
 
-                            @if(Route::has('profile.admin.users'))
-                                <a class="dropdown-item" href="{{ route('profile.admin.users') }}">Пользователи</a>
-                            @endif
+                        @if(Route::has('profile.admin.users'))
+                            <a class="dropdown-item" href="{{ route('profile.admin.users') }}">Пользователи</a>
+                        @endif
 
                         @if(Route::has('profile.index'))
                             <a class="dropdown-item" href="{{ route('profile.index') }}">Личный кабинет</a>
                         @endif
 
                         @if(Route::has('auth.logout'))
-                            <a class="dropdown-item" href="{{ route('auth.logout') }}">Выйти</a>
+                                <a class="dropdown-item" href="{{ route('auth.logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    Выйти
+                                </a>
+                                <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                         @endif
                     </div>
-                </div>
-            </li>
+                </li>
+            @endguest
 
-            @if(Route::has('auth.login'))
-                @if(Route::is('auth.login'))
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Войти</a>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.login') }}">Войти</a>
-                    </li>
-                @endif
-            @endif
 
-            @if(Route::has('auth.register'))
-                @if(Route::is('auth.register'))
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Регистрация</a>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.register') }}">Регистрация</a>
-                    </li>
-                @endif
-            @endif
         </ul>
     </div>
 </nav>

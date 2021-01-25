@@ -7,7 +7,7 @@ use App\Http\Controllers\main\AboutController;
 use App\Http\Controllers\main\CalculationCostController;
 use App\Http\Controllers\main\ContactsController;
 use App\Http\Controllers\main\FeedbackController;
-use App\Http\Controllers\main\HomeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\main\OrderController;
 use App\Http\Controllers\main\PartnersController;
 use App\Http\Controllers\profile\AdminController;
@@ -31,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])
 ->name('home');
 
+Route::get('/index', [HomeController::class, 'index'])
+    ->name('index');
+
 Route::get('/about', [AboutController::class, 'about'])
     ->name('about');
 
@@ -38,6 +41,9 @@ Route::get('/contacts', [ContactsController::class, 'contacts'])
     ->name('contacts');
 
 Route::get('/feedback', [FeedbackController::class, 'feedback'])
+    ->name('feedback');
+
+Route::post('/feedback', [FeedbackController::class, 'create'])
     ->name('feedback');
 
 Route::get('/order', [OrderController::class, 'order'])
@@ -59,19 +65,23 @@ Route::group([
         Route::get('login', [LoginController::class, 'showLoginForm'])
             ->name('login');
 
-        Route::post('login', [LoginController::class, 'login']);
+        Route::post('login', [LoginController::class, 'login'])
+            ->name('login');
     }
 
     // Logout Routes...
     if ($options['logout'] ?? true) {
-        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+        Route::post('logout', [LoginController::class, 'logout'])
+            ->name('logout');
     }
 
     // Registration Routes...
     if ($options['register'] ?? true) {
         Route::get('register', [RegisterController::class, 'showRegistrationForm'])
             ->name('register');
-        Route::post('register', [RegisterController::class, 'register']);
+
+        Route::post('register', [RegisterController::class, 'register'])
+            ->name('register');
     }
 
     // Password Reset Routes...
@@ -102,6 +112,9 @@ Route::group([
 
     Route::get('/', [ProfileController::class, 'profile'])
         ->name('index');
+
+    Route::post('/edit', [ProfileController::class, 'edit'])
+        ->name('edit');
 
     Route::get('/courier/order', [CourierController::class, 'order'])
         ->name('courier.order');

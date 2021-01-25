@@ -16,6 +16,10 @@ html, body, .container {
     justify-content: space-between;
 }
 
+.padding-top-20 {
+    padding-top: 20px;
+}
+
 .margin-top-20 {
     margin-top: 20px;
 }
@@ -75,3 +79,12 @@ header {
     max-height: 100px;
     margin: 10px 0;
 }
+
+/*feedback*/
+
+/*.star-rating {*/
+/*    line-height:32px;*/
+/*    font-size:1.25em;*/
+/*}*/
+
+/*.star-rating .fa-star{color: yellow;}*/

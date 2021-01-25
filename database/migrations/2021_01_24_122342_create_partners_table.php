@@ -23,6 +23,8 @@ class CreatePartnersTable extends Migration
             $table->text('description');
             $table->string('src', 1023)
                 ->default('https://via.placeholder.com/640x240');
+            $table->string('link', 255)
+                ->nullable(true);
             $table->softDeletes();
             $table->timestamps();
         });

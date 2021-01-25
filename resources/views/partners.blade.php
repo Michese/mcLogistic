@@ -26,6 +26,25 @@
     </section>
     <section>
         <h2>Специальные предложения</h2>
-
+        <ul>
+            <li><a href="{{ asset('documentation/акции.txt') }}" download>Предложения</a></li>
+        </ul>
+    </section>
+    <section>
+        <h2>Наши партнеры</h2>
+        <article class="row d-flex justify-content-between flex-wrap">
+            @foreach($partners as $partner)
+                    <div class="card margin-top-20" style="width: 18rem;">
+                        <img src="{{ $partner->src }}" class="card-img-top" alt="image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $partner->title }}</h5>
+                            <p class="card-text">{{ $partner->description }}</p>
+                            @if(!is_null($partner->link))
+                                <a href="{{ $partner->link }}" class="btn btn-primary">Перейти</a>
+                            @endif
+                        </div>
+                    </div>
+            @endforeach
+        </article>
     </section>
 @endsection

@@ -7,6 +7,7 @@
 @section('content')
 
     <form class="d-flex justify-content-center align-content-center" action="{{ route('auth.login') }}" method="post">
+        @csrf
         <article class="d-flex flex-column col-6">
             <h1 class="align-self-center">Войти</h1>
             <div class="form-group">

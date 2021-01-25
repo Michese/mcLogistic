@@ -62,8 +62,10 @@
                 <div class="form-group">
                     <select class="custom-select custom-select">
                         <option selected>Способ оплаты</option>
-                        <option value="1">Банковская карта</option>
-                        <option value="2">Наличные</option>
+                        @foreach($paymentMethods as $paymentMethod)
+                            <option value="{{ $paymentMethod->payment_method_id }}">{{ $paymentMethod->title }}</option>
+                        @endforeach
+
                     </select>
                 </div>
             </article>
@@ -72,9 +74,9 @@
                 <div class="form-group">
                     <select class="custom-select custom-select-sm">
                         <option selected>Тип</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        @foreach($typeCargos as $typeCargo)
+                            <option value="{{ $typeCargo->type_cargo_id }}">{{ $typeCargo->title }}</option>
+                        @endforeach
                     </select>
                 </div>
 

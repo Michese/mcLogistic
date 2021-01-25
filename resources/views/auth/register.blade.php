@@ -13,13 +13,14 @@
 
 @section('content')
     <form class="d-flex justify-content-center align-content-center" action="{{ route('auth.register') }}" method="post">
-
+        @csrf
         <article class="d-flex flex-column col-6">
             <h1 class="align-self-center">Регистрация</h1>
             <div class="form-group">
-                <label for="fullname">ФИО</label>
+                <label for="name">ФИО</label>
                 <input type="text" class="form-control" id="fullname" name="name">
             </div>
+
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">

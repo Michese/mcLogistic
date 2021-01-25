@@ -6,34 +6,51 @@
 
 @section('content')
 
-    <form class="d-flex justify-content-center align-content-center" action="#" method="post">
-
+    <form class="d-flex justify-content-center align-content-center" action="{{ route('profile.edit') }}" method="post">
+        @csrf
         <article class="d-flex flex-column col-6">
             <h1 class="align-self-center">Личный кабинет</h1>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">ФИО*</label>
-                <input type="text" class="form-control" id="fullname" value="Олег">
+                <label for="fullname">ФИО*</label>
+                <input type="text" class="form-control" id="fullname" value="{{ Auth::user()->name }}" name="name">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Email*</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                       value="example@example.com">
+                <label for="email">Email*</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                       value="{{ Auth::user()->email }}" name="email">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Телефон*</label>
-                <input type="tel" class="form-control" value="+7 900 888 88 88">
+                <label for="phone">Телефон*</label>
+                <input type="tel" class="form-control" value="{{ Auth::user()->phone }}" name="phone" id="phone">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Новый пароль</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <label for="password">Новый пароль</label>
+                <input type="password" class="form-control" id="password" name="password">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Текущий пароль*</label>
-                <input type="password" class="form-control" id="exampleInputPassword2">
+                <label for="currentPassword">Текущий пароль*</label>
+                <input type="password" class="form-control" id="currentPassword" name="currentPassword">
             </div>
             <button type="submit" class="btn btn-primary align-self-center">Сохранить</button>
+            @if ($errors->any())
+                <div class="alert alert-danger margin-top-20">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
         </article>
+
+
+        {{--        @if()--}}
+        {{--            <div class="alert alert-danger" role="alert">--}}
+        {{--                <p>A simple danger alert—check it out!</p>--}}
+        {{--            </div>--}}
+        {{--        @endif--}}
     </form>
     <script>
 
