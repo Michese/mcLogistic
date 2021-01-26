@@ -42,6 +42,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
      *
@@ -75,6 +76,18 @@ class User extends Authenticatable
 
     public function feedback()
     {
-        return $this->belongsTo(Feedback::class);
+        return $this->belongsToMany(Feedback::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'orders');
+    }
+
+    public function getAllCouriers()
+    {
+        return self::select()
+            ->where(['access_id' => 2])
+            ->get();
     }
 }

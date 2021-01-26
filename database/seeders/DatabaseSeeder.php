@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(EventSeeder::class);
 //        $this->call(PartnerSeeder::class);
 //        $this->call(TypeCargoSeeder::class);
-        $this->call(PaymentMethodSeeder::class);
+//        $this->call(PaymentMethodSeeder::class);
+        $this->call(OrderStatusSeeder::class);
     }
 }

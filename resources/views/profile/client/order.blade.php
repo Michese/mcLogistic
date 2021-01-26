@@ -14,19 +14,36 @@
             <th>Примерное время доставки</th>
             <th>Статус заказа</th>
             <th>Сумма</th>
-            <th>Удалить</th>
+            <th>Способ оплаты</th>
         </tr>
         </thead>
         <tbody>
+        @foreach($orders as $order)
+            <tr>
 
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>5</td>
-        </tr>
+                <td class="poster">
+                    {{ $order->order_id }}
+                    <div class="card descr" style="width: 18rem;">
+                        <div class="card-body">
+                            <h3 class="card-title">Адрес получения</h3>
+                            <p class="card-text">{{ $order->sending_address }}</p>
+                            <h3 class="card-title">Адрес доставки</h3>
+                            <p class="card-text">{{ $order->delivery_address }}</p>
+                            <h3 class="card-title">Габариты груза</h3>
+                            <p class="card-text">Ширина: {{ $order->cargo->width }}, м</p>
+                            <p class="card-text">Высота: {{ $order->cargo->height }}, м</p>
+                            <p class="card-text">Длина: {{ $order->cargo->length }}, м</p>
+                            <p class="card-text">Вес: {{ $order->cargo->weight }}, кг</p>
+                        </div>
+                    </div>
+                </td>
+                <td>{{ $order->sending_date }}</td>
+                <td>{{ $order->delivery_date }}</td>
+                <td>{{ $order->orderStatus->title }}</td>
+                <td>{{ $order->amount }}</td>
+                <td>{{ $order->paymentMethod->title }}</td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 @endsection

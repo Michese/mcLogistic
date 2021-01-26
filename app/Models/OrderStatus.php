@@ -24,4 +24,14 @@ use Illuminate\Database\Eloquent\Model;
 class OrderStatus extends Model
 {
     use HasFactory;
+    protected $table='order_statuses';
+    protected $primaryKey='order_status_id';
+    protected $fillable = [
+        'title'
+    ];
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

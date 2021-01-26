@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Order
@@ -53,5 +54,70 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'orders';
+    protected $primaryKey = 'order_id';
+    protected $fillable = [
+        'user_id',
+        'cargo_id',
+        'order_status_id',
+        'payment_method_id',
+        'sending_address',
+        'delivery_address',
+        'sending_date',
+        'delivery_date',
+        'delivery_client_name',
+        'delivery_client_phone',
+        'has_insurance',
+        'has_filling_up',
+        'has_supporting_documents',
+        'has_return_documents',
+        'amount',
+    ];
+    protected $forceDeleting = false;
+
+    public function getOrdersByClientId(int $id)
+    {
+        return $this->select()
+            ->where('user_id', '=', $id)
+            ->orderBy('delivery_date')
+            ->get();
+    }
+
+    public function getOrdersForManagerOrderPage()
+    {
+        return $this->select()
+            ->orWhereIn('order_status_id', [1, 2])
+            ->get();
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function cargo()
+    {
+        return $this->hasOne(Cargo::class, 'cargo_id', 'cargo_id');
+    }
+
+    public function orderStatus()
+    {
+        return $this->hasOne(OrderStatus::class, 'order_status_id', 'order_status_id');
+    }
+
+    public function paymentMethod()
+    {
+        return $this->hasOne(PaymentMethod::class, 'payment_method_id', 'payment_method_id');
+    }
+
+    public static function countByUserId(int $id): int
+    {
+        return self::query()
+            ->where(['user_id' => $id])
+            ->where('order_status_id', '!=', 7)
+            ->where('order_status_id', '!=', 8)
+            ->count();
+    }
 }

@@ -12,17 +12,17 @@
             <h1 class="align-self-center">Личный кабинет</h1>
 
             <div class="form-group">
-                <label for="fullname">ФИО*</label>
-                <input type="text" class="form-control" id="fullname" value="{{ Auth::user()->name }}" name="name">
+                <label for="fullname">Имя*</label>
+                <input type="text" class="form-control" id="fullname" value="{{ Auth::user()->name }}" name="name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email*</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                       value="{{ Auth::user()->email }}" name="email">
+                       value="{{ Auth::user()->email }}" name="email" required>
             </div>
             <div class="form-group">
                 <label for="phone">Телефон*</label>
-                <input type="tel" class="form-control" value="{{ Auth::user()->phone }}" name="phone" id="phone">
+                <input type="tel" class="form-control" value="{{ Auth::user()->phone }}" name="phone" id="phone" required>
             </div>
             <div class="form-group">
                 <label for="password">Новый пароль</label>
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label for="currentPassword">Текущий пароль*</label>
-                <input type="password" class="form-control" id="currentPassword" name="currentPassword">
+                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
             </div>
             <button type="submit" class="btn btn-primary align-self-center">Сохранить</button>
             @if ($errors->any())

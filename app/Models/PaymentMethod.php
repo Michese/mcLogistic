@@ -30,4 +30,9 @@ class PaymentMethod extends Model
     protected $fillable=[
         'title'
     ];
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

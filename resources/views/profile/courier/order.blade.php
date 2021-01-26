@@ -27,33 +27,38 @@
         </thead>
         <tbody>
 
-        <tr>
-
-            <td class="poster">
-                1
-                <div class="card descr" style="width: 18rem;">
-                    <div class="card-body">
-                        <h3 class="card-title">Адрес получения</h3>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <h3 class="card-title">Адрес доставки</h3>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <h3 class="card-title">Габариты груза</h3>
-                        <p class="card-text">Ширина: </p>
-                        <p class="card-text">Высота: </p>
-                        <p class="card-text">Длина: </p>
-                        <p class="card-text">Вес: </p>
+        @forelse($orders as $order)
+            <tr>
+                <td class="poster">
+                    {{ $order->order_id }}
+                    <div class="card descr" style="width: 18rem;">
+                        <div class="card-body">
+                            <h3 class="card-title">Адрес получения</h3>
+                            <p class="card-text">{{ $order->sending_address }}</p>
+                            <h3 class="card-title">Адрес доставки</h3>
+                            <p class="card-text">{{ $order->delivery_address }}</p>
+                            <h3 class="card-title">Габариты груза</h3>
+                            <p class="card-text">Ширина: {{ $order->cargo->width }}, м</p>
+                            <p class="card-text">Высота: {{ $order->cargo->height }}, м</p>
+                            <p class="card-text">Длина: {{ $order->cargo->length }}, м</p>
+                            <p class="card-text">Вес: {{ $order->cargo->weight }}, кг</p>
+                            <p class="card-text">Стоимость: {{ $order->cargo->amount }}, руб</p>
+                            <p class="card-text">Способ оплаты: {{ $order->paymentMethod->title }}</p>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td><i class="fas fa-truck"></i></td>
-            <td><i class="fas fa-truck"></i></td>
-            <td><i class="fas fa-truck"></i></td>
-            <td><i class="fas fa-truck"></i></td>
-            <td>5</td>
-        </tr>
+                </td>
+                <td>{{ $order->sending_date }}</td>
+                <td>{{ $order->delivery_date }}</td>
+                <td>{{ $order->orderStatus->title }}</td>
+                <td><i class="fas fa-truck"></i></td>
+                <td><i class="fas fa-truck"></i></td>
+                <td><i class="fas fa-truck"></i></td>
+                <td><i class="fas fa-truck"></i></td>
+                <td>{{ $order->amount }}</td>
+            </tr>
+            @empty
+                <tr><td>Пока нет</td></tr>
+        @endforelse
         </tbody>
     </table>
 
@@ -70,29 +75,35 @@
         </thead>
         <tbody>
 
-        <tr>
+        @forelse($suggestedOrders as $order)
+            <tr>
 
-            <td class="poster">
-                1
-                <div class="card descr" style="width: 18rem;">
-                    <div class="card-body">
-                        <h3 class="card-title">Адрес получения</h3>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <h3 class="card-title">Адрес доставки</h3>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <h3 class="card-title">Габариты груза</h3>
-                        <p class="card-text">Ширина: </p>
-                        <p class="card-text">Высота: </p>
-                        <p class="card-text">Длина: </p>
-                        <p class="card-text">Вес: </p>
+                <td class="poster">
+                    {{ $order->order_id }}
+                    <div class="card descr" style="width: 18rem;">
+                        <div class="card-body">
+                            <h3 class="card-title">Адрес получения</h3>
+                            <p class="card-text">{{ $order->sending_address }}</p>
+                            <h3 class="card-title">Адрес доставки</h3>
+                            <p class="card-text">{{ $order->delivery_address }}</p>
+                            <h3 class="card-title">Габариты груза</h3>
+                            <p class="card-text">Ширина: {{ $order->cargo->width }}, м</p>
+                            <p class="card-text">Высота: {{ $order->cargo->height }}, м</p>
+                            <p class="card-text">Длина: {{ $order->cargo->length }}, м</p>
+                            <p class="card-text">Вес: {{ $order->cargo->weight }}, кг</p>
+                            <p class="card-text">Стоимость: {{ $order->cargo->amount }}, руб</p>
+                            <p class="card-text">Способ оплаты: {{ $order->paymentMethod->title }}</p>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td>2</td>
-            <td>3</td>
-            <td><i class="fas fa-truck"></i></td>
-            <td>5</td>
-        </tr>
+                </td>
+                <td>{{ $order->sending_date }}</td>
+                <td>{{ $order->delivery_date }}</td>
+                <td><i class="fas fa-truck"></i></td>
+                <td>{{ $order->amount }}</td>
+            </tr>
+        @empty
+            <tr><td>Пока нет</td></tr>
+        @endforelse
         </tbody>
     </table>
 @endsection

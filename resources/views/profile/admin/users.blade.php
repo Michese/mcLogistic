@@ -20,20 +20,26 @@
         </thead>
         <tbody>
 
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>
-                <select class="custom-select custom-select-sm mb-3">
-                    <option value="1" selected>One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </td>
-            <td><i class="fas fa-trash-alt"></i></td>
-        </tr>
+        @foreach($users as $user)
+            <tr>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->phone }}</td>
+                <td>
+                    <select class="custom-select custom-select-sm mb-3">
+                        @foreach($accesses as $access)
+                            <option value="{{ $access->order_status_id }}"
+                                    @if( $access->order_status_id == $user->order_status_id )
+                                    selected
+                                @endif
+                            >{{ $access->title }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td><i class="fas fa-trash-alt"></i></td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 

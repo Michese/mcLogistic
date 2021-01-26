@@ -13,54 +13,54 @@
 
 @section('content')
     <h1 class="align-self-center">Оформить заказ</h1>
-    <form class="d-flex align-content-center flex-column" action="#" method="post">
-
+    <form class="d-flex align-content-center flex-column" action="{{ route('order.create') }}" method="post">
+        @csrf
         <div class="d-flex justify-content-sm-between form-group w-100 row row-cols-6">
             <article class="border border-primary col-5 rounded">
                 <h2>Доставка</h2>
 
                 <div class="form-group">
-                    <label for="appt-date">Дата отправки:</label>
-                    <input id="appt-date" type="date" class="form-control" name="date">
+                    <label for="sending_date">Дата отправки:</label>
+                    <input id="sending_date" type="date" class="form-control" name="sending_date">
                 </div>
 
                 <div class="form-group">
-                    <label for="appt-time">Время отправки: </label>
-                    <input id="appt-time" type="time" class="form-control" name="time">
+                    <label for="sending_time">Время отправки: </label>
+                    <input id="sending_time" type="time" class="form-control" name="sending_time">
                 </div>
 
                 <div class="form-group">
-                    <label for="address1">Адрес отправки</label>
-                    <input type="text" class="form-control" id="address1">
+                    <label for="sending_address">Адрес отправки</label>
+                    <input type="text" class="form-control" id="sending_address" name="sending_address">
                 </div>
 
                 <div class="form-group">
-                    <label for="appt-date">Дата доставки:</label>
-                    <input id="appt-date" type="date" class="form-control" name="date">
+                    <label for="delivery_date">Дата доставки:</label>
+                    <input id="delivery_date" type="date" class="form-control" name="delivery_date">
                 </div>
 
                 <div class="form-group">
-                    <label for="appt-time">Время доставки: </label>
-                    <input id="appt-time" type="time" class="form-control" name="time">
+                    <label for="delivery_time">Время доставки: </label>
+                    <input id="delivery_time" type="time" class="form-control" name="delivery_time">
                 </div>
 
                 <div class="form-group">
-                    <label for="address2">Адрес получения</label>
-                    <input type="text" class="form-control" id="address2">
+                    <label for="delivery_address">Адрес получения</label>
+                    <input type="text" class="form-control" id="delivery_address" name="delivery_address">
+                </div>
+
+                <div class="delivery_client_name">
+                    <label for="delivery_client_name">ФИО получателя</label>
+                    <input type="text" class="form-control" id="delivery_client_name" name="delivery_client_name">
                 </div>
 
                 <div class="form-group">
-                    <label for="fullname">ФИО получателя</label>
-                    <input type="text" class="form-control" id="fullname">
+                    <label for="delivery_client_phone">Телефон получателя</label>
+                    <input type="tel" class="form-control" name="delivery_client_phone" id="delivery_client_phone">
                 </div>
 
                 <div class="form-group">
-                    <label>Телефон получателя</label>
-                    <input type="tel" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <select class="custom-select custom-select">
+                    <select class="custom-select custom-select" name="payment_method_id">
                         <option selected>Способ оплаты</option>
                         @foreach($paymentMethods as $paymentMethod)
                             <option value="{{ $paymentMethod->payment_method_id }}">{{ $paymentMethod->title }}</option>
@@ -72,7 +72,7 @@
             <article class="border border-primary col-5 rounded">
                 <h2>Характеристики груза</h2>
                 <div class="form-group">
-                    <select class="custom-select custom-select-sm">
+                    <select class="custom-select custom-select-sm" name="type_cargo_id">
                         <option selected>Тип</option>
                         @foreach($typeCargos as $typeCargo)
                             <option value="{{ $typeCargo->type_cargo_id }}">{{ $typeCargo->title }}</option>
@@ -82,32 +82,32 @@
 
                 <div class="row">
                     <div class="form-group col-5">
-                        <label>Длина, м</label>
-                        <input type="number" class="form-control">
+                        <label for="length">Длина, м</label>
+                        <input type="number" class="form-control" id="length" name="length" required>
                     </div>
                     <div class="form-group col-5">
-                        <label>Ширина, м</label>
-                        <input type="number" class="form-control">
+                        <label for="width">Ширина, м</label>
+                        <input type="number" class="form-control" id="width" name="width" required>
                     </div>
                     <div class="form-group col-5">
-                        <label>Высота, м</label>
-                        <input type="number" class="form-control">
+                        <label for="height">Высота, м</label>
+                        <input type="number" class="form-control" id="height" name="height" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Вес, кг</label>
-                    <input type="number" class="form-control">
+                    <label for="weight">Вес, кг</label>
+                    <input type="number" class="form-control" id="weight" name="weight" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Примерная стоимость, руб</label>
-                    <input type="number" class="form-control">
+                    <label for="amount">Примерная стоимость, руб</label>
+                    <input type="number" class="form-control" id="amount" name="amount" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="validationTextarea">Комментарии по доставке</label>
-                    <textarea class="form-control" id="validationTextarea" placeholder="" required></textarea>
+                    <label for="comment">Комментарии по доставке</label>
+                    <textarea class="form-control" id="comment" name="comment" placeholder="" required></textarea>
                 </div>
 
             </article>
@@ -115,34 +115,30 @@
             <article class="border border-primary col-5 rounded margin-top-20">
                 <h2>Дополнительные услуги</h2>
                 <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" id="customControlValidation1">
-                    <label class="custom-control-label" for="customControlValidation1">Добавить страховку</label>
-                    <div class="invalid-feedback">Example invalid feedback text</div>
+                    <input type="checkbox" class="custom-control-input" id="has_insurance" name="has_insurance">
+                    <label class="custom-control-label" for="has_insurance">Добавить страховку</label>
                 </div>
 
                 <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" id="customControlValidation2">
-                    <label class="custom-control-label" for="customControlValidation2">Опломбировать</label>
-                    <div class="invalid-feedback">Example invalid feedback text</div>
+                    <input type="checkbox" class="custom-control-input" id="has_filling_up" name="has_filling_up">
+                    <label class="custom-control-label" for="has_filling_up">Опломбировать</label>
                 </div>
 
                 <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" id="customControlValidation3">
-                    <label class="custom-control-label" for="customControlValidation3">Организация перевозки
+                    <input type="checkbox" class="custom-control-input" id="has_supporting_documents" name="has_supporting_documents">
+                    <label class="custom-control-label" for="has_supporting_documents">Организация перевозки
                         сопроводительных документов</label>
-                    <div class="invalid-feedback">Example invalid feedback text</div>
                 </div>
 
                 <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" id="customControlValidation4">
-                    <label class="custom-control-label" for="customControlValidation4">Возврат документов</label>
-                    <div class="invalid-feedback">Example invalid feedback text</div>
+                    <input type="checkbox" class="custom-control-input" id="has_return_documents" name="has_return_documents">
+                    <label class="custom-control-label" for="has_return_documents">Возврат документов</label>
                 </div>
             </article>
         </div>
 
         <div class="form-group col-5">
-            <p class="margin-top-20 price text-success">Сумма: <span id="total">0</span></p>
+            <p class="margin-top-20 price text-success">Сумма: <span id="amount">0</span></p>
         </div>
 
         <button type="submit" class="btn btn-primary align-self-center">Подтвердить</button>
@@ -150,7 +146,7 @@
     </form>
     <script>
 
-        $("#address1").suggestions({
+        $("#delivery_address").suggestions({
             token: "d6097cd2b54bebb53f5dc6707398488706079aec",
             type: "ADDRESS",
             onSelect: function (suggestion) {
@@ -158,7 +154,7 @@
             }
         });
 
-        $("#address2").suggestions({
+        $("#sending_address").suggestions({
             token: "d6097cd2b54bebb53f5dc6707398488706079aec",
             type: "ADDRESS",
             onSelect: function (suggestion) {
@@ -166,7 +162,7 @@
             }
         });
 
-        $("#fullname").suggestions({
+        $("#delivery_client_name").suggestions({
             token: "d6097cd2b54bebb53f5dc6707398488706079aec",
             type: "NAME",
             onSelect: function (suggestion) {

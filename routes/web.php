@@ -49,6 +49,9 @@ Route::post('/feedback', [FeedbackController::class, 'create'])
 Route::get('/order', [OrderController::class, 'order'])
     ->name('order');
 
+Route::post('/order/create', [OrderController::class, 'create'])
+    ->name('order.create');
+
 Route::get('/calculationСost', [CalculationCostController::class, 'calculationСost'])
     ->name('calculation.cost');
 

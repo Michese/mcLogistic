@@ -127,7 +127,9 @@
                     <a class="btn btn-primary btn-sm dropdown-toggle" href="#" role="button"
                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->name }}
-                        <span class="badge badge-light">2</span>
+                        @if($countOrders)
+                            <span class="badge badge-light">{{ $countOrders }}</span>
+                        @endif
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -156,14 +158,14 @@
                         @endif
 
                         @if(Route::has('auth.logout'))
-                                <a class="dropdown-item" href="{{ route('auth.logout') }}"
-                                   onclick="event.preventDefault();
+                            <a class="dropdown-item" href="{{ route('auth.logout') }}"
+                               onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    Выйти
-                                </a>
-                                <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
+                                Выйти
+                            </a>
+                            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         @endif
                     </div>
                 </li>
