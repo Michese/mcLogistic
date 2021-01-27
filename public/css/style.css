@@ -49,6 +49,12 @@ header {
     margin: 25px 0;
 }
 
+.social-button {
+    width: 45px;
+    height: 45px;
+    font-size: 22pt;
+}
+
 /* courier order */
 
 .poster {

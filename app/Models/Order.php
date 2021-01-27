@@ -92,7 +92,7 @@ class Order extends Model
         return $this->select()
             ->where('user_id', '=', $id)
             ->orderBy('delivery_date')
-            ->get();
+            ->paginate(10);
     }
 
     public function getOrdersForManagerOrderPage()
@@ -100,7 +100,7 @@ class Order extends Model
         return $this->select()
             ->whereNull('courier_id')
             ->WhereIn('order_status_id', [1, 2])
-            ->get();
+            ->paginate(9);
     }
 
     public function user()
@@ -153,6 +153,6 @@ class Order extends Model
             ->whereNotNull('courier_id')
             ->whereNotIn('order_status_id', [7, 8])
             ->orWhere(['order_status_id' => 1])
-            ->get();
+            ->paginate(10);
     }
 }

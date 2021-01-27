@@ -28,7 +28,7 @@ class CreateFeedbackTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')
-                ->references('user_id')->on('users');
+                ->references('id')->on('users');
         });
     }
 

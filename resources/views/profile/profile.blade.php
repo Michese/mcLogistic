@@ -29,8 +29,8 @@
                 <input type="password" class="form-control" id="password" name="password">
             </div>
             <div class="form-group">
-                <label for="currentPassword">Текущий пароль*</label>
-                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                <label for="currentPassword">Текущий пароль</label>
+                <input type="password" class="form-control" id="currentPassword" name="currentPassword">
             </div>
             <button type="submit" class="btn btn-primary align-self-center">Сохранить</button>
             @if ($errors->any())

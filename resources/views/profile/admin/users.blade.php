@@ -7,6 +7,16 @@
 @section('content')
     <h1>Пользователи</h1>
 
+    @if ($errors->any())
+        <div class="alert alert-danger margin-top-20">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <table class="table table-hover">
         <thead>
         <tr>
@@ -57,6 +67,10 @@
         @endforeach
         </tbody>
     </table>
+
+    <div class="w-100 d-flex justify-content-center">
+        {{ $users->onEachSide(5)->links() }}
+    </div>
 
     <script>
         const editButtons = document.querySelectorAll('.edit');

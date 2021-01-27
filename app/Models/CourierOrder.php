@@ -55,7 +55,7 @@ class CourierOrder extends Model
     {
         return self::query()
             ->where(['user_id' => $courier_id])
-            ->get();
+            ->paginate(10);
     }
 
     public static function countByCourierId(int $id): int

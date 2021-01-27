@@ -15,6 +15,7 @@ use App\Http\Controllers\profile\ClientController;
 use App\Http\Controllers\profile\CourierController;
 use App\Http\Controllers\profile\ManagerController;
 use App\Http\Controllers\profile\ProfileController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -96,6 +97,17 @@ Route::group([
     if ($options['verify'] ?? false) {
         Route::emailVerification();
     }
+
+    Route::group([
+        'prefix' => '/socialite',
+        'as' => 'socialite.',
+    ], function () {
+        Route::get('/vk', [SocialiteController::class, 'redirectVK'])
+            ->name('vk');
+
+        Route::get('/response/vk', [SocialiteController::class, 'responseVK'])
+            ->name('response.vk');
+    });
 });
 
 Route::group([

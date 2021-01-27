@@ -144,6 +144,17 @@
         <button type="submit" class="btn btn-primary align-self-center">Подтвердить</button>
 
     </form>
+
+    @if ($errors->any())
+        <div class="alert alert-danger margin-top-20">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <script>
 
         $("#delivery_address").suggestions({

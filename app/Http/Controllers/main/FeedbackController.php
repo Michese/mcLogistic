@@ -10,9 +10,11 @@ class FeedbackController extends Controller
 {
     public function feedback()
     {
-        $feedback = Feedback::all();
+        $feedback = Feedback::query()
+            ->orderByDesc('feedback_id')
+            ->paginate(5);
         return view('feedback', [
-            'feedback'=>$feedback,
+            'feedback' => $feedback,
         ]);
     }
 

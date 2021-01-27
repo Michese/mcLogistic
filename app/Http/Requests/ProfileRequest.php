@@ -45,7 +45,7 @@ class ProfileRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if (!$this->checkUserPassword()) {
+            if ( !$this->checkUserPassword()) {
                 $validator->errors()
                     ->add(
                         'password',
@@ -56,7 +56,7 @@ class ProfileRequest extends FormRequest
     }
 
     protected function checkUserPassword() {
-        return \Hash::check(
+        return is_null(\Auth::user()->password) || \Hash::check(
             $this->post('currentPassword'),
             \Auth::user()->password
         );

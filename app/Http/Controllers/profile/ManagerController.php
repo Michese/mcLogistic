@@ -39,6 +39,13 @@ class ManagerController extends Controller
         if($orderStatusId != 1) {
             $order = Order::find($request->post('order_id'));
             $order->order_status_id = $orderStatusId;
+            if($orderStatusId == 2) {
+                CourierOrder::where([
+                    'user_id' => $order->courier_id,
+                    'order_id' => $order->order_id,
+                    ])->delete();
+                $order->courier_id = null;
+            }
             $order->save();
         }
         return redirect()->route('profile.manager.monitoring');

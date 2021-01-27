@@ -23,7 +23,23 @@
                 <label class="form-check-label" for="rememberMe" >Запомнить логин</label>
             </div>
             <button type="submit" class="btn btn-primary align-self-center">Войти</button>
+            @if ($errors->any())
+                <div class="alert alert-danger margin-top-20">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="d-flex justify-content-around margin-top-20">
+                <div class="d-flex justify-content-center align-items-center pt-1 social-button bg-primary border rounded-circle">
+                    <a href="{{ route('auth.socialite.vk') }}" class="text-light"><i class="fab fa-vk"></i></a>
+                </div>
+
+            </div>
         </article>
     </form>
-    <a href="#"><i class="fab fa-vk"></i></a>
+
 @endsection

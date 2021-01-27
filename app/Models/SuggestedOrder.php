@@ -58,7 +58,7 @@ class SuggestedOrder extends Model
     {
         return self::select()
             ->where(['user_id' => $user_id])
-            ->get();
+            ->paginate(10);
     }
 
     public function deleteSuggestedOrdersByOrderId(int $order_id)

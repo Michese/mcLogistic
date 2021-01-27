@@ -91,6 +91,10 @@
 
             </article>
         @endforeach
+        <div class="w-100 d-flex justify-content-center">
+            {{ $feedback->onEachSide(5)->links() }}
+        </div>
+
     </section>
 
 

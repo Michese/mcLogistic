@@ -63,6 +63,9 @@
             Пока нет
         @endforelse
 
+        <div class="w-100 d-flex justify-content-center">
+            {{ $orders->onEachSide(5)->links() }}
+        </div>
 
         <script>
             const submits = document.querySelectorAll('.submit');

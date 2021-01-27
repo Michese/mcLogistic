@@ -62,6 +62,10 @@
         </tbody>
     </table>
 
+    <div class="w-100 d-flex justify-content-center">
+        {{ $courierOrders->onEachSide(5)->links() }}
+    </div>
+
     <h2 class="text-xl-center">Предложенные заказы</h2>
     <table class="table table-hover">
         <thead>
@@ -114,6 +118,9 @@
         @endforelse
         </tbody>
     </table>
+    <div class="w-100 d-flex justify-content-center">
+        {{ $suggestedOrders->onEachSide(5)->links() }}
+    </div>
 
     <script>
         const statuses = document.querySelectorAll('.status');

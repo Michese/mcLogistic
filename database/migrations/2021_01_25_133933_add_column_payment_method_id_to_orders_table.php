@@ -29,6 +29,7 @@ class AddColumnPaymentMethodIdToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign('orders_payment_method_id_foreign');
             $table->dropColumn('payment_method_id');
         });
     }
