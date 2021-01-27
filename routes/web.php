@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\main\AboutController;
 use App\Http\Controllers\main\CalculationCostController;
 use App\Http\Controllers\main\ContactsController;
@@ -53,8 +52,12 @@ Route::get('/order', [OrderController::class, 'order'])
 Route::post('/order/create', [OrderController::class, 'create'])
     ->name('order.create');
 
-Route::get('/calculationСost', [CalculationCostController::class, 'calculationСost'])
+Route::get('/calculationCost', [CalculationCostController::class, 'calculationCost'])
     ->name('calculation.cost');
+
+
+Route::post('/calculationCost/calculate', [CalculationCostController::class, 'calculateAdd'])
+    ->name('calculation.cost.calculate');
 
 Route::get('/partners', [PartnersController::class, 'partners'])
     ->name('partners');

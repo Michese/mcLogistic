@@ -13,6 +13,17 @@
 
 @section('content')
     <h1 class="align-self-center">Оформить заказ</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger margin-top-20">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form class="d-flex align-content-center flex-column" action="{{ route('order.create') }}" method="post">
         @csrf
         <div class="d-flex justify-content-sm-between form-group w-100 row row-cols-6">
@@ -65,7 +76,6 @@
                         @foreach($paymentMethods as $paymentMethod)
                             <option value="{{ $paymentMethod->payment_method_id }}">{{ $paymentMethod->title }}</option>
                         @endforeach
-
                     </select>
                 </div>
             </article>
@@ -85,10 +95,12 @@
                         <label for="length">Длина, м</label>
                         <input type="number" class="form-control" id="length" name="length" required>
                     </div>
+
                     <div class="form-group col-5">
                         <label for="width">Ширина, м</label>
                         <input type="number" class="form-control" id="width" name="width" required>
                     </div>
+
                     <div class="form-group col-5">
                         <label for="height">Высота, м</label>
                         <input type="number" class="form-control" id="height" name="height" required>
@@ -121,39 +133,30 @@
 
                 <div class="custom-control custom-checkbox mb-3">
                     <input type="checkbox" class="custom-control-input" id="has_filling_up" name="has_filling_up">
-                    <label class="custom-control-label" for="has_filling_up">Опломбировать</label>
+                    <label class="custom-control-label" for="has_filling_up">Опломбировать (+ 30p)</label>
                 </div>
 
                 <div class="custom-control custom-checkbox mb-3">
                     <input type="checkbox" class="custom-control-input" id="has_supporting_documents" name="has_supporting_documents">
                     <label class="custom-control-label" for="has_supporting_documents">Организация перевозки
-                        сопроводительных документов</label>
+                        сопроводительных документов (+ 100p)</label>
                 </div>
 
                 <div class="custom-control custom-checkbox mb-3">
                     <input type="checkbox" class="custom-control-input" id="has_return_documents" name="has_return_documents">
-                    <label class="custom-control-label" for="has_return_documents">Возврат документов</label>
+                    <label class="custom-control-label" for="has_return_documents">Возврат документов (+ 200p)</label>
                 </div>
             </article>
         </div>
 
         <div class="form-group col-5">
-            <p class="margin-top-20 price text-success">Сумма: <span id="amount">0</span></p>
+            <a class="btn btn-primary align-self-center" id="calculateButton">Рассчитать</a>
+            <p class="margin-top-20 price text-success">Сумма: <span id="total">0</span></p>
         </div>
 
         <button type="submit" class="btn btn-primary align-self-center">Подтвердить</button>
 
     </form>
-
-    @if ($errors->any())
-        <div class="alert alert-danger margin-top-20">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <script>
 
@@ -180,6 +183,44 @@
                 console.log(suggestion);
             }
         });
+
+        const calculateButton = document.querySelector('#calculateButton')
+        calculateButton.addEventListener('click', () => {
+
+            const length = document.querySelector('#length').value;
+            const width = document.querySelector('#width').value;
+            const height = document.querySelector('#height').value;
+            const weight = document.querySelector('#weight').value;
+            const amount = document.querySelector('#amount').value;
+            const has_insurance = document.querySelector('#has_insurance').value;
+            const has_filling_up = document.querySelector('#has_filling_up').value;
+            const has_supporting_documents = document.querySelector('#has_supporting_documents').value;
+            const has_return_documents = document.querySelector('#has_return_documents').value;
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('calculation.cost.calculate') }}",
+                data: {
+                    'length':length,
+                    'width':width,
+                    'height':height,
+                    'weight':weight,
+                    'amount':amount,
+                    'has_insurance':has_insurance,
+                    'has_filling_up':has_filling_up,
+                    'has_supporting_documents':has_supporting_documents,
+                    'has_return_documents':has_return_documents
+                },
+                dataType: "json",
+                success: function(response){
+                    const total = document.querySelector('#total')
+                    total.textContent = response;
+                }
+            });
+        })
 
     </script>
 

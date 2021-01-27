@@ -24,9 +24,9 @@ class OrderController extends Controller
         ]);
     }
 
-    public function create(CreateOrderRequest $request, Cargo $model)
+    public function create(CreateOrderRequest $request, Cargo $cargo)
     {
-        $model->fill([
+        $cargo->fill([
             'type_cargo_id' => $request->post('type_cargo_id'),
             'length' => $request->post('length'),
             'width' => $request->post('width'),
@@ -36,27 +36,42 @@ class OrderController extends Controller
             'comment' => $request->post('comment'),
         ])->save();
 
-        $pp = 40.0; // расстояние (Москва)
-        $c = 24.0; // скорость
+        $total = 0.0;
+        $tariff = 1.0;
+        $volume = $cargo->height * $cargo->length * $cargo->width;
+        $density = $cargo->weight / $volume;
 
-        // суммарное время загрузки транспортного средства с максимальным
-        // использованием его грузоподъемности и объема кузова и полной разгрузки груза, мин.
-        $vpr = 20.0;
+        if ($density > 250.0) {
+            $total = $cargo->weight * $tariff;
+        } else {
+            $total = 250.0 * $volume * $tariff;
+        }
 
-        $gr = 1; // грузоподъемность TODO
-        $kg = 0.8;
-        $sce = 69.72; // сметная цена на эксплуатацию транспортного средства, руб. / маш.ч TODO
+        if($request->post('has_insurance') == 'on') {
+            if($cargo->amount < 2000) {
+                $total += 35;
+            } else if ($cargo->amount < 50000) {
+                $total += 50;
+            } else if ($cargo->amount >= 50000) {
+                $total += $cargo->amount * 0.01;
+            }
+        }
 
-        $fond = 200000.0;  // фонд оплаты труда
-        $nr = ($fond * 120.0) / 100.0; // Накладные расходы, руб.
-        $cp = ($fond * 65.0) / 100.0; // Сметная прибыль, руб.
+        if($request->post('has_filling_up') == 'on') {
+            $total += 30;
+        }
 
-        $st = ((((((($pp * 2.0) / $c) * 60.0 + $vpr)) / 60.0) * $sce) / ($gr * $kg));
-        // + $nr + $cp
+        if ($request->post('has_supporting_documents') == 'on') {
+            $total += 100;
+        }
+
+        if($request->post('has_return_documents') == 'on') {
+            $total += 200;
+        }
 
         Order::create([
             'user_id' => \Auth::id(),
-            'cargo_id' => $model->cargo_id,
+            'cargo_id' => $cargo->cargo_id,
             'payment_method_id' => $request->post('payment_method_id'),
             'order_status_id' => 1,
             'sending_address' => $request->post('sending_address'),
@@ -69,7 +84,7 @@ class OrderController extends Controller
             'has_filling_up' => ($request->post('has_filling_up') == 'on') ? 1 : 0,
             'has_supporting_documents' => ($request->post('has_supporting_documents') == 'on') ? 1 : 0,
             'has_return_documents' => ($request->post('has_return_documents') == 'on') ? 1 : 0,
-            'amount' => $st,
+            'amount' => $total,
         ]);
 
         return redirect()->route('profile.client.order');
