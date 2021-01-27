@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])
-->name('home');
+    ->name('home');
 
 Route::get('/index', [HomeController::class, 'index'])
     ->name('index');
@@ -62,7 +62,7 @@ Route::get('/partners', [PartnersController::class, 'partners'])
 Route::group([
     'prefix' => '/auth',
     'as' => 'auth.',
-], function() {
+], function () {
     // Login Routes...
     if ($options['login'] ?? true) {
         Route::get('login', [LoginController::class, 'showLoginForm'])
@@ -99,18 +99,27 @@ Route::group([
 });
 
 Route::group([
-    'prefix'=> '/profile',
+    'prefix' => '/profile',
     'as' => 'profile.',
-], function() {
+], function () {
     Route::group([
-        'prefix'=> '/manager',
+        'prefix' => '/manager',
         'as' => 'manager.',
-    ], function() {
+    ], function () {
         Route::get('/order', [ManagerController::class, 'order'])
             ->name('order');
 
+        Route::post('/order/send', [ManagerController::class, 'sendToCouriers'])
+            ->name('order.send');
+
         Route::get('/monitoring', [ManagerController::class, 'monitoring'])
             ->name('monitoring');
+
+        Route::post('/monitoring/change', [ManagerController::class, 'change'])
+            ->name('monitoring.change');
+
+        Route::post('/monitoring/cancel', [ManagerController::class, 'cancel'])
+            ->name('monitoring.cancel');
     });
 
     Route::get('/', [ProfileController::class, 'profile'])
@@ -119,12 +128,35 @@ Route::group([
     Route::post('/edit', [ProfileController::class, 'edit'])
         ->name('edit');
 
-    Route::get('/courier/order', [CourierController::class, 'order'])
-        ->name('courier.order');
+    Route::group([
+        'prefix' => '/courier',
+        'as' => 'courier.',
+    ], function () {
+        Route::get('/order', [CourierController::class, 'order'])
+            ->name('order');
+
+        Route::post('/order/add', [CourierController::class, 'add'])
+            ->name('order.add');
+
+        Route::post('/order/change', [CourierController::class, 'changeStatusOrder'])
+            ->name('order.change');
+    });
 
     Route::get('/client/order', [ClientController::class, 'order'])
         ->name('client.order');
 
-    Route::get('/admin/users', [AdminController::class, 'users'])
-        ->name('admin.users');
+    Route::group([
+        'prefix' => '/admin',
+        'as' => 'admin.',
+    ], function () {
+        Route::get('/users', [AdminController::class, 'users'])
+            ->name('users');
+
+        Route::post('/users/edit', [AdminController::class, 'edit'])
+            ->name('users.edit');
+
+        Route::post('/users/delete', [AdminController::class, 'delete'])
+            ->name('users.delete');
+    });
+
 });

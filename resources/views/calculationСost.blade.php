@@ -87,7 +87,7 @@
             </div>
 
             <div class="btn-group align-self-center d-flex justify-content-around w-100">
-                <button type="submit" class="btn btn-primary col-3">Расчитать</button>
+                <button type="submit" class="btn btn-primary col-3">Рассчитать</button>
                 @if(Route::has('order'))
                     <a class="btn btn-primary col-3" href="{{ route('order') }}">Сделать заказ</a>
                 @endif

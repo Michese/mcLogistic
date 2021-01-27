@@ -35,6 +35,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Cargo whereWeight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cargo whereWidth($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Order $orders
+ * @method static \Illuminate\Database\Query\Builder|Cargo onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Cargo withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Cargo withoutTrashed()
+ * @property-read \App\Models\Order|null $order
  */
 class Cargo extends Model
 {
@@ -52,8 +57,8 @@ class Cargo extends Model
         'comment',
     ];
 
-    public function orders()
+    public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasOne(Order::class);
     }
 }

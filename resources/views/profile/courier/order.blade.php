@@ -27,34 +27,34 @@
         </thead>
         <tbody>
 
-        @forelse($orders as $order)
-            <tr>
+        @forelse($courierOrders as $courierOrder)
+            <tr id="{{ $courierOrder->order->order_id }}">
                 <td class="poster">
-                    {{ $order->order_id }}
+                    {{ $courierOrder->order->order_id }}
                     <div class="card descr" style="width: 18rem;">
                         <div class="card-body">
                             <h3 class="card-title">Адрес получения</h3>
-                            <p class="card-text">{{ $order->sending_address }}</p>
+                            <p class="card-text">{{ $courierOrder->order->sending_address }}</p>
                             <h3 class="card-title">Адрес доставки</h3>
-                            <p class="card-text">{{ $order->delivery_address }}</p>
+                            <p class="card-text">{{ $courierOrder->order->delivery_address }}</p>
                             <h3 class="card-title">Габариты груза</h3>
-                            <p class="card-text">Ширина: {{ $order->cargo->width }}, м</p>
-                            <p class="card-text">Высота: {{ $order->cargo->height }}, м</p>
-                            <p class="card-text">Длина: {{ $order->cargo->length }}, м</p>
-                            <p class="card-text">Вес: {{ $order->cargo->weight }}, кг</p>
-                            <p class="card-text">Стоимость: {{ $order->cargo->amount }}, руб</p>
-                            <p class="card-text">Способ оплаты: {{ $order->paymentMethod->title }}</p>
+                            <p class="card-text">Ширина: {{ $courierOrder->order->cargo->width }}, м</p>
+                            <p class="card-text">Высота: {{ $courierOrder->order->cargo->height }}, м</p>
+                            <p class="card-text">Длина: {{ $courierOrder->order->cargo->length }}, м</p>
+                            <p class="card-text">Вес: {{ $courierOrder->order->cargo->weight }}, кг</p>
+                            <p class="card-text">Стоимость: {{ $courierOrder->order->cargo->amount }}, руб</p>
+                            <p class="card-text">Способ оплаты: {{ $courierOrder->order->paymentMethod->title }}</p>
                         </div>
                     </div>
                 </td>
-                <td>{{ $order->sending_date }}</td>
-                <td>{{ $order->delivery_date }}</td>
-                <td>{{ $order->orderStatus->title }}</td>
-                <td><i class="fas fa-truck"></i></td>
-                <td><i class="fas fa-truck"></i></td>
-                <td><i class="fas fa-truck"></i></td>
-                <td><i class="fas fa-truck"></i></td>
-                <td>{{ $order->amount }}</td>
+                <td>{{ $courierOrder->order->sending_date }}</td>
+                <td>{{ $courierOrder->order->delivery_date }}</td>
+                <td class="orderStatus">{{ $courierOrder->order->orderStatus->title }}</td>
+                <td data-status="4" class="status"><i class="fas fa-truck"></i></td>
+                <td data-status="5" class="status"><i class="fas fa-truck"></i></td>
+                <td data-status="6" class="status"><i class="fas fa-truck"></i></td>
+                <td data-status="7" class="status"><i class="fas fa-truck"></i></td>
+                <td>{{ $courierOrder->order->amount }}</td>
             </tr>
             @empty
                 <tr><td>Пока нет</td></tr>
@@ -75,35 +75,73 @@
         </thead>
         <tbody>
 
-        @forelse($suggestedOrders as $order)
+        @forelse($suggestedOrders as $suggestedOrder)
             <tr>
 
                 <td class="poster">
-                    {{ $order->order_id }}
+                    {{ $suggestedOrder->order->order_id }}
                     <div class="card descr" style="width: 18rem;">
                         <div class="card-body">
                             <h3 class="card-title">Адрес получения</h3>
-                            <p class="card-text">{{ $order->sending_address }}</p>
+                            <p class="card-text">{{ $suggestedOrder->order->sending_address }}</p>
                             <h3 class="card-title">Адрес доставки</h3>
-                            <p class="card-text">{{ $order->delivery_address }}</p>
+                            <p class="card-text">{{ $suggestedOrder->order->delivery_address }}</p>
                             <h3 class="card-title">Габариты груза</h3>
-                            <p class="card-text">Ширина: {{ $order->cargo->width }}, м</p>
-                            <p class="card-text">Высота: {{ $order->cargo->height }}, м</p>
-                            <p class="card-text">Длина: {{ $order->cargo->length }}, м</p>
-                            <p class="card-text">Вес: {{ $order->cargo->weight }}, кг</p>
-                            <p class="card-text">Стоимость: {{ $order->cargo->amount }}, руб</p>
-                            <p class="card-text">Способ оплаты: {{ $order->paymentMethod->title }}</p>
+                            <p class="card-text">Ширина: {{ $suggestedOrder->order->cargo->width }}, м</p>
+                            <p class="card-text">Высота: {{ $suggestedOrder->order->cargo->height }}, м</p>
+                            <p class="card-text">Длина: {{ $suggestedOrder->order->cargo->length }}, м</p>
+                            <p class="card-text">Вес: {{ $suggestedOrder->order->cargo->weight }}, кг</p>
+                            <p class="card-text">Стоимость: {{ $suggestedOrder->order->cargo->amount }}, руб</p>
+                            <p class="card-text">Способ оплаты: {{ $suggestedOrder->order->paymentMethod->title }}</p>
                         </div>
                     </div>
                 </td>
-                <td>{{ $order->sending_date }}</td>
-                <td>{{ $order->delivery_date }}</td>
-                <td><i class="fas fa-truck"></i></td>
-                <td>{{ $order->amount }}</td>
+                <td>{{ $suggestedOrder->order->sending_date }}</td>
+                <td>{{ $suggestedOrder->order->delivery_date }}</td>
+
+                <td>
+                    <form action="{{ route('profile.courier.order.add') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="order_id" value="{{ $suggestedOrder->order->order_id }}">
+                        <button type="submit"><i class="fas fa-truck"></i></button>
+                    </form>
+
+                </td>
+                <td>{{ $suggestedOrder->order->amount }}</td>
             </tr>
         @empty
             <tr><td>Пока нет</td></tr>
         @endforelse
         </tbody>
     </table>
+
+    <script>
+        const statuses = document.querySelectorAll('.status');
+
+        statuses.forEach(status => {
+            status.addEventListener('click', () => {
+                const status_id = status.dataset.status;
+                const tr = status.parentNode;
+                const order_id = tr.id;
+
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        status_id: status_id,
+                        order_id: order_id,
+                    },
+                    url: "{{ route('profile.courier.order.change') }}",
+                    dataType: 'json',
+                    success: function (response) {
+                        const orderStatus = tr.querySelector('.orderStatus');
+                        orderStatus.textContent = response.title;
+                        console.log(response.title);
+                    }
+                });
+            })
+        })
+    </script>
 @endsection

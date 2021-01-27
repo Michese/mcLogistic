@@ -20,8 +20,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Access whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Access whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read int|null $users_count
  */
 class Access extends Model
 {
     use HasFactory;
+
+    protected $table = 'accesses';
+    protected $primaryKey = 'access_id';
+    protected $fillable = [
+        'title'
+    ];
+
+    public function users() {
+        return $this->hasMany(User::class);
+    }
 }

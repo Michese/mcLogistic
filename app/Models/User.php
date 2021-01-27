@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -37,10 +38,21 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Feedback $feedback
+ * @property-read int|null $feedback_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Access $access
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SuggestedOrder[] $suggestedOrders
+ * @property-read int|null $suggested_orders_count
+ * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|User withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $primaryKey = 'id';
     /**
@@ -74,20 +86,39 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $forceDeleting = false;
+
     public function feedback()
     {
-        return $this->belongsToMany(Feedback::class);
+        return $this->hasMany(Feedback::class);
     }
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'orders');
+        return $this->hasMany(Order::class);
+    }
+
+    public function suggestedOrders()
+    {
+        return $this->hasMany(SuggestedOrder::class);
+    }
+
+    public function access()
+    {
+        return $this->belongsTo(Access::class, 'access_id', 'access_id');
+    }
+
+    public function courierOrders()
+    {
+        return $this->hasMany(CourierOrder::class);
     }
 
     public function getAllCouriers()
     {
         return self::select()
-            ->where(['access_id' => 2])
+            ->whereIn('access_id', [2,3])
             ->get();
     }
+
+
 }

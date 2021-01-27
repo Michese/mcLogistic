@@ -18,7 +18,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($orders as $order)
+        @forelse($orders as $order)
             <tr>
 
                 <td class="poster">
@@ -43,7 +43,11 @@
                 <td>{{ $order->amount }}</td>
                 <td>{{ $order->paymentMethod->title }}</td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td>Пока нет</td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
 @endsection

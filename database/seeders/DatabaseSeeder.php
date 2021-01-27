@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Access;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,8 @@ class DatabaseSeeder extends Seeder
 //        $this->call(PartnerSeeder::class);
 //        $this->call(TypeCargoSeeder::class);
 //        $this->call(PaymentMethodSeeder::class);
-        $this->call(OrderStatusSeeder::class);
+//        $this->call(OrderStatusSeeder::class);
+//        $this->call(AccessSeeder::class);
+//        $this->call(UserSeeder::class);
     }
 }

@@ -44,13 +44,6 @@
             @endif
 
         </article>
-
-
-        {{--        @if()--}}
-        {{--            <div class="alert alert-danger" role="alert">--}}
-        {{--                <p>A simple danger alert—check it out!</p>--}}
-        {{--            </div>--}}
-        {{--        @endif--}}
     </form>
     <script>
 

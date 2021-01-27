@@ -38,6 +38,16 @@
                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
             </div>
             <button type="submit" class="btn btn-primary align-self-center">Зарегистрироваться</button>
+
+            @if ($errors->any())
+                <div class="alert alert-danger margin-top-20">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </article>
     </form>
 

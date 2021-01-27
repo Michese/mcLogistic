@@ -51,6 +51,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
  * @mixin \Eloquent
+ * @property int $payment_method_id
+ * @property-read \App\Models\Cargo|null $cargo
+ * @property-read \App\Models\OrderStatus|null $orderStatus
+ * @property-read \App\Models\PaymentMethod|null $paymentMethod
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Query\Builder|Order onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentMethodId($value)
+ * @method static \Illuminate\Database\Query\Builder|Order withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Order withoutTrashed()
+ * @property-read \App\Models\SuggestedOrder|null $suggestedOrder
  */
 class Order extends Model
 {
@@ -88,28 +98,44 @@ class Order extends Model
     public function getOrdersForManagerOrderPage()
     {
         return $this->select()
-            ->orWhereIn('order_status_id', [1, 2])
+            ->whereNull('courier_id')
+            ->WhereIn('order_status_id', [1, 2])
             ->get();
     }
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function courier()
+    {
+        return $this->belongsTo(User::class, 'courier_id', 'id');
     }
 
     public function cargo()
     {
-        return $this->hasOne(Cargo::class, 'cargo_id', 'cargo_id');
+        return $this->belongsTo(Cargo::class, 'cargo_id', 'cargo_id');
     }
 
     public function orderStatus()
     {
-        return $this->hasOne(OrderStatus::class, 'order_status_id', 'order_status_id');
+        return $this->belongsTo(OrderStatus::class, 'order_status_id', 'order_status_id');
     }
 
     public function paymentMethod()
     {
-        return $this->hasOne(PaymentMethod::class, 'payment_method_id', 'payment_method_id');
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id', 'payment_method_id');
+    }
+
+    public function suggestedOrder()
+    {
+        return $this->hasOne(SuggestedOrder::class);
+    }
+
+    public function courierOrder()
+    {
+        return $this->hasOne(CourierOrder::class);
     }
 
     public static function countByUserId(int $id): int
@@ -119,5 +145,14 @@ class Order extends Model
             ->where('order_status_id', '!=', 7)
             ->where('order_status_id', '!=', 8)
             ->count();
+    }
+
+    public function getOrdersForMonitoringPage()
+    {
+        return self::query()
+            ->whereNotNull('courier_id')
+            ->whereNotIn('order_status_id', [7, 8])
+            ->orWhere(['order_status_id' => 1])
+            ->get();
     }
 }

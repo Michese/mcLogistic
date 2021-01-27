@@ -7,7 +7,7 @@
 @section('content')
     <h1>Заказы</h1>
     <section class="row">
-        {{ $count=1 }}
+        @php($count=1 )
         @forelse($orders as $order)
             <article class="card bg-dark text-light border rounded-sm col-4">
                 <div class="card-body">
@@ -34,22 +34,27 @@
                             </div>
                         </div>
                     </div>
-                    <form action="#">
-
+                    <form id="{{ $order->order_id }}">
+                        @csrf
                         <div class="order-form-scroll">
                             @forelse($couriers as $courier)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="id" value="{{ $courier->id }}" id="user{{$count}}">
-                                <label class="form-check-label" for="user{{ $count++ }}">
-                                    {{ $courier->name }}
-                                     (заказов: {{ $orders[0]->countByUserId($courier->id) }})
-                                </label>
-                            </div>
+                                <div class="form-check">
+                                    <input class="form-check-input check_user" type="checkbox" name="user_id"
+                                           value="{{ $courier->id }}" id="user{{$count}}">
+                                    <label class="form-check-label" for="user{{ $count++ }}">
+                                        {{ $courier->name }}
+                                        @if(isset($courier->courierOrders[0]))
+                                            (заказов: {{ $courier->courierOrders[0]->countByCourierId($courier->id) }})
+                                        @else
+                                            (заказов: 0)
+                                        @endif
+                                    </label>
+                                </div>
                             @empty
                                 Курьеров пока нет
                             @endforelse
                         </div>
-                        <submit class="btn btn-primary float-right">Отправить</submit>
+                        <a class="btn btn-primary float-right submit">Поручить</a>
                     </form>
 
                 </div>
@@ -58,5 +63,45 @@
             Пока нет
         @endforelse
 
+
+        <script>
+            const submits = document.querySelectorAll('.submit');
+
+            submits.forEach(submit => {
+                submit.addEventListener('click', () => {
+                    let count = 0;
+                    const form = submit.parentNode;
+                    const users = form.querySelectorAll('.check_user')
+                    const sendToUsers = [];
+                    users.forEach(user => {
+                        if (user.checked) {
+                            sendToUsers.push(user.value)
+                        }
+                    })
+                    console.log(count)
+                    const jsform = JSON.stringify({
+                        sendToUsers
+                    })
+                    $.ajax({
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            jsform,
+                            'order_id': form.id
+                        },
+                        url: "{{ route('profile.manager.order.send') }}",
+                        dataType: 'json',
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        fail: function (response) {
+                            console.log(response);
+                        }
+                    });
+                })
+            });
+        </script>
     </section>
 @endsection
